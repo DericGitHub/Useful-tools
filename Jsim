@@ -1,0 +1,62 @@
+#!/bin/bash
+prim_set=true
+have_exe_page=false
+have_page=false
+page_path="$1/phx/components/Print3/zxps/IPS/SPISim/page"
+csr_path="$1/phx/components/Print3/zxps/IPS/DOResources/csr_resources"
+echo "Setup simulator environment"
+echo "Print FW version:<Print3>"
+#check if we are in correct path and project has been compiled.
+if [ ! -d "$1/phx" ];then
+	echo "usage:setup_sim <scm directory path> <test fiel>"
+	exit
+fi
+#if [ ! -f "$1/phx/Jsim.log" ];then
+#	echo "detected Jsim.log"
+#fi
+if [ ! -d "$1/Jsim" ];then
+	mkdir $1/Jsim
+	echo "mkdir $1/Jsim"
+else
+	rm -rf $1/Jsim/*
+	echo "remove $1/Jsim"
+fi
+#if [ ! -d "$1/phx/EXE" ] || [ ! -f "$1/phx/EXE/page" ] || [ ! -d "$1/phx/EXE/csr_resources" ];then
+#	echo "Seems we don't have page and csr_resources in EXE ,try to find it directly."
+#	if [ ! -f "$1/phx/components/Print3/zxps/IPS/SPIsim/page" ];then
+#		echo "ERROR:Please change directory to $1/phx and run 'phxmake -j12 Product=<your product> TargPair=<target compiler> Flavor=debug Simulator=true' first."
+#		exit
+#	else
+#		have_page=true
+#	fi
+#else
+#	have_exe_page=true
+#fi
+#if [ $have_page ];then
+#mkdir $1/phx/EXE
+#mkdir
+if [ ! -f "$page_path" ] || [ ! -d "$csr_path" ];then
+	echo "ERROR:Please change directory to $1/phx and run 'phxmake -j12 Product=<your product> TargPair=<target compiler> Flavor=debug Simulator=true' first."
+	exit
+fi
+cp -r $page_path $1/Jsim/.
+cp -r $csr_path $1/Jsim/.
+echo "move page and csr to Jsim"
+mkdir $1/Jsim/PSdisk0
+echo "mkdir PSdisk0"
+ln -s $1/Jsim/csr_resources $1/Jsim/PSdisk0/csr_resources
+cd $1/Jsim/
+page -Ot<$2
+gimp page*.tif
+#if [ $have_exe_page ];then
+#	#make PSdisk0
+#	if [ ! -d "$1/phx/EXE/PSdisk0" ];then
+#		mkdir $1/phx/EXE/PSdisk0
+#	fi
+#	ln -s $1/phx/EXE/csr_resources $1/phx/EXE/PSdisk0/csr_resources
+#
+##process file
+#cd $1/phx/EXE/
+#page -Ot<$2
+#gimp page*.tif
+

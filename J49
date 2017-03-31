@@ -1,0 +1,27 @@
+#!/usr/bin/python
+from bs4 import BeautifulSoup
+import urllib2
+import re
+import os
+import sys
+def main():
+	ip = sys.argv[1] 
+	request = urllib2.Request("http://"+ip+"/hp/device/developer/errorLog.html")
+	response = urllib2.urlopen(request)
+	#print response.read()
+	soup = BeautifulSoup(response.read(),"lxml")
+	result=soup.find_all(text=re.compile("(ASSERT.*?|^0x.*?$|Task:.*?|File:.*?|Built:.*?|Abort|Addr:.*?)"))
+	
+	f=open("errorlog.txt",'w')
+	for i in result:
+		f.write(i+'\n')
+	f.close()
+	os.system("decodeErrorlog.py -m "+sys.argv[2]+" -i errorlog.txt -o errorlog_decode.txt >/dev/null")
+
+
+
+if __name__ == '__main__':
+	r = main()
+	
+	sys.exit(r)
+
