@@ -4,24 +4,67 @@ import urllib2
 import re
 import os
 import sys
-def main():
-	ip = sys.argv[1] 
-	request = urllib2.Request("http://"+ip+"/hp/device/developer/errorLog.html")
+import optparse
+import tempfile
+def main(opts):
+	if not opts.ip:
+		print "Please provide IP address which you want to check"
+		print parser.print_help()
+		return False
+	if not opts.map:
+		print 'please input the directory of .map file, for example:'
+		print '/projects/phx/nightly/puma.mon.debug/puma.map'
+		print parser.print_help()
+		return False
+	if not opts.output:
+		output_file="errorlog.txt"
+	else:
+		output_file=opts.output
+	print "#"*50
+	print "IP:"+opts.ip
+	print "Map file:"+opts.map
+	print "Output file:"+output_file 
+	print "#"*50
+	request = urllib2.Request("http://"+opts.ip+"/hp/device/developer/errorLog.html")
 	response = urllib2.urlopen(request)
 	#print response.read()
 	soup = BeautifulSoup(response.read(),"lxml")
 	result=soup.find_all(text=re.compile("(ASSERT.*?|^0x.*?$|Task:.*?|File:.*?|Built:.*?|Abort|Addr:.*?)"))
-	
-	f=open("errorlog.txt",'w')
+	print "Got raw data from http://"+opts.ip+"/hp/device/developer/errorLog.html"
+	try:
+		handle=tempfile.mktemp()
+		f=open(handle,'w+b')
+	except:
+		sys.exit(False)
+	f.write("<IP>:"+opts.ip+'\n')
+	f.write("<Map file>:"+opts.map+'\n')
 	for i in result:
 		f.write(i+'\n')
 	f.close()
-	os.system("decodeErrorlog.py -m "+sys.argv[2]+" -i errorlog.txt -o errorlog_decode.txt >/dev/null")
+	print "Begin translating raw data to readable file"
+	print f.name
+	os.system("decodeErrorlog.py -m "+opts.map+" -i "+f.name+" -o "+output_file+" >/dev/null")
 
+	f.close()
+	os.remove(handle)
 
 
 if __name__ == '__main__':
-	r = main()
-	
+
+	usage = "usage: python J49 -p <IP> -m <map file> [-o <output file>]"
+	parser = optparse.OptionParser(usage=usage)
+
+	parser.add_option("-p","--ip",default=None,type="string",dest="ip",help="IP of which printer you want to check")
+	parser.add_option("-m","--map",default=None,type="string",dest="map",help="the full directory of *.map, e.g. '/projects/phx/nightly/puma.mon.debug/puma.map'")
+	parser.add_option("-o","--output",default=None,type="string",dest="output",help="output file name, the error address and related function name will be recorded into this file")
+
+
+
+	try :
+		options, arguments = parser.parse_args()
+	except :
+		sys.exit (False)
+
+	r = main(options)
 	sys.exit(r)
 
