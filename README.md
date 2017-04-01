@@ -6,7 +6,7 @@ To speed up our work process and to practice python skill, I propose to build a 
 Name|Version|Brief
 -|-|-
 J49|v0.2.1|Translate errlog to readable text
-Jsim|v0.1.0|Setup simulator environment and preview output file
+Jsim|v0.2.0|Setup simulator environment and preview output file
 
 ## Usage
 * J49
@@ -24,18 +24,21 @@ Options:
 ```
 * Jsim
 ```
+Usage:run 'setup_sim &lt;test fiel>' in you scm directory
 ```
 ## Change Log
 * 2017.03.31
-	* submit J49-v0.1.0 and Jsim-v0.1.0
+	* submit J49 v0.1.0 and Jsim v0.1.0
 
 * 2017.04.01
 	* J49 v0.2.1
-    	* Basic function implemented.Now we are able to fetch the raw error message from http://<IP>/hp/device/developer/errorLog.html
-    	and translate it to readable call stack information.
+    	* Basic function implemented.Now we are able to fetch the raw error message from http://<IP>/hp/device/developer/errorLog.html and translate it to readable call stack information.
     	* Help message added.
 		* Remove useless output message.
 	* README.md initialized.
+	* Jsim v0.2.0
+		* remove scm path parameter when execute program.Now we need to run Jsim in your target scm directory.
+		*Remove unnecessary code.
 
 
 ## Bugs
