@@ -4,7 +4,7 @@ To speed up our work process and to practice python skill, I propose to build a 
 
 ## Tool list
 Name|Version|Brief
--   |   -   |  -
+-|-|-
 J49|v0.2.1|Translate errlog to readable text
 Jsim|v0.1.0|Setup simulator environment and preview output file
 
