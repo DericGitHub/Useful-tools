@@ -1,6 +1,6 @@
 # Useful-tools
 ## Foreword
-To speed up our work process and to practice python skill, I propose to build a series of executable automated scripts by following our standard debug process.
+To speed up our work process and to practice python skill, I propose to build a series of executable automated scripts which following our standard debug process.
 
 ## Tool list
 Name|Version|Brief
