@@ -24,7 +24,7 @@ Options:
 ```
 * Jsim
 ```
-Usage:run 'setup_sim <test fiel>' in you scm directory
+Usage:run 'setup_sim <test file>' in you scm directory
 ```
 ## Change Log
 * 2017.03.31
