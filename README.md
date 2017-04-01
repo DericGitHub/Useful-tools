@@ -24,7 +24,7 @@ Options:
 ```
 * Jsim
 ```
-Usage:run 'setup_sim <test file>' in you scm directory
+Usage:run 'Jsim <test file>' in you scm directory
 ```
 ## Change Log
 * 2017.03.31
@@ -38,7 +38,7 @@ Usage:run 'setup_sim <test file>' in you scm directory
 	* README.md initialized.
 	* Jsim v0.2.0
 		* remove scm path parameter when execute program.Now we need to run Jsim in your target scm directory.
-		*Remove unnecessary code.
+		* Remove unnecessary code.
 
 
 ## Bugs
