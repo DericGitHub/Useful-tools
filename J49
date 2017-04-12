@@ -43,7 +43,7 @@ def main(opts):
 	f.close()
 	print "Begin translating raw data to readable file"
 	os.system("decodeErrorlog.py -m "+opts.map+" -i "+f.name+" -o "+output_file+" >/dev/null")
-
+	print "Translation completed"
 	f.close()
 	os.remove(handle)
 

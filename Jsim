@@ -9,13 +9,13 @@ echo "Print FW version:<Print3>"
 #check if we are in correct path and project has been compiled.
 if [ ! -d "$(pwd)/phx" ];then
 	echo "Error! Could not found your scm directory."
-	echo "usage:run 'Jsim <test fiel>' in you scm directory."
+	echo "usage:run 'Jsim <test file>' in you scm directory."
 	exit
 fi
 #check if we have given a valid source file
 if [ ! -f "$1" ];then
 	echo "Error! Please provide a valid source file."
-	echo "usage:run 'Jsim <test fiel>' in you scm directory."
+	echo "usage:run 'Jsim <test file>' in you scm directory."
 	exit
 fi
 #prepare Jsim directory
