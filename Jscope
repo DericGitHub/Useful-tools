@@ -1,0 +1,60 @@
+#!/usr/bin/python
+from bs4 import BeautifulSoup
+import urllib2
+import re
+import os
+import sys
+import optparse
+import tempfile
+'''
+ ----------------------------------------------- 
+| use_c  |  use_python  |  Behavior             |
+|--------|--------------|-----------------------|
+|  true  |     false    |  build for C          |          
+|--------|--------------|-----------------------|
+|  false |     true     |  build for python     |               
+|--------|--------------|-----------------------|
+|  false |     false    |  build for C          |      
+|--------|--------------|-----------------------|
+|  true  |     true     |  Someone who don't    |
+|        |              |  follow the rule ,    |
+|        |              |  set a trick for him  |                  
+ ------------------------------------------------
+'''
+def main(opts):
+    if not opts.use_python:
+        print ">>>> make cscope for C project."
+        os.system("cscope -Rkbq")
+        print "<<<< done."
+        return True
+    if not opts.use_c and opts.use_python:
+        print ">>>> make cscope for Python project."
+        os.system("find . -name \"*.py\" |grep -v \"__init__.py\" >cscope.files")
+        os.system("cscope -b")
+        print "<<<< done."
+        return True
+    if opts.use_c and opts.use_python:
+        print "Coming soon......."
+        '''
+            set a trick here.
+        '''
+        return False
+
+if __name__ == '__main__':
+
+	usage = "usage: python Jscope [-c|-p]"
+	parser = optparse.OptionParser(usage=usage)
+
+	parser.add_option("-c","--cpp",default=False,action="store_true",dest="use_c",help="If make cscope for a C project")
+	parser.add_option("-p","--python",default=False,action="store_true",dest="use_python",help="If make cscope for a Python project")
+
+
+
+	try :
+		options, arguments = parser.parse_args()
+	except :
+		sys.exit (False)
+
+	r = main(options)
+	sys.exit(r)
+

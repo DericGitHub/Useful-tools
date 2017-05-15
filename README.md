@@ -7,6 +7,7 @@ Name|Version|Brief
 -|-|-
 J49|v0.2.1|Translate errlog to readable text
 Jsim|v0.2.0|Setup simulator environment and preview output file
+Jscope|v0.1.0|Short cut for building cscope by C & Python
 
 ## Usage
 * J49
@@ -26,6 +27,16 @@ Options:
 ```
 Usage:run 'Jsim <test file>' in you scm directory
 ```
+
+* Jscope
+```
+Usage: python Jscope [-c|-p]
+
+Options:
+  -h, --help    show this help message and exit
+  -c, --cpp     If make cscope for a C project
+  -p, --python  If make cscope for a Python project
+```
 ## Change Log
 * 2017.03.31
 	* submit J49 v0.1.0 and Jsim v0.1.0
@@ -39,7 +50,11 @@ Usage:run 'Jsim <test file>' in you scm directory
 	* Jsim v0.2.0
 		* remove scm path parameter when execute program.Now we need to run Jsim in your target scm directory.
 		* Remove unnecessary code.
-
+* 2017.05.14
+    * Jscope v0.1.0
+        * Feature implemented. Be able to support C & Python.
+            * For C, use `-Rkbq`
+            * For Python, generate a file list contained all python file excepted `__init__.py` and use `-b`.
 
 ## Bugs
 ## Notes
