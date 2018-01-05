@@ -22,20 +22,32 @@ import tempfile
  ------------------------------------------------
 '''
 def main(opts):
-    if not opts.use_python and not opts.use_java:
+    if not opts.use_python and not opts.use_java and not opts.use_php and not opts.use_cs:
         print ">>>> make cscope for C project."
         os.system("cscope -Rkbq")
         print "<<<< done."
         return True
-    if not opts.use_c and not opts.use_java and opts.use_python:
+    if not opts.use_c and not opts.use_java and not opts.use_php and not opts.use_cs and opts.use_python:
         print ">>>> make cscope for Python project."
         os.system("find . -name \"*.py\" |grep -v \"__init__.py\" >cscope.files")
         os.system("cscope -b")
         print "<<<< done."
         return True
-    if not opts.use_c and not opts.use_python and opts.use_java:
+    if not opts.use_c and not opts.use_python and not opts.use_php and not opts.use_cs and opts.use_java:
         print ">>>> make cscope for Java project."
         os.system("find . -name \"*.java\" >cscope.files")
+        os.system("cscope -b")
+        print "<<<< done."
+        return True
+    if not opts.use_c and not opts.use_python and not opts.use_java and not opts.use_cs and opts.use_php:
+        print ">>>> make cscope for PHP project."
+        os.system("find . -name \"*.php\" >cscope.files")
+        os.system("cscope -b")
+        print "<<<< done."
+        return True
+    if not opts.use_c and not opts.use_python and not opts.use_java and not opts.use_php and opts.use_cs:
+        print ">>>> make cscope for C# project."
+        os.system("find . -name \"*.cs\" >cscope.files")
         os.system("cscope -b")
         print "<<<< done."
         return True
@@ -48,12 +60,14 @@ def main(opts):
 
 if __name__ == '__main__':
 
-	usage = "usage: python Jscope [-c|-p|-j]"
+	usage = "usage: python Jscope [-c|-p|-j|--php]"
 	parser = optparse.OptionParser(usage=usage)
 
 	parser.add_option("-c","--cpp",default=False,action="store_true",dest="use_c",help="If make cscope for a C project")
 	parser.add_option("-p","--python",default=False,action="store_true",dest="use_python",help="If make cscope for a Python project")
 	parser.add_option("-j","--java",default=False,action="store_true",dest="use_java",help="If make cscope for a Python project")
+	parser.add_option("--php",default=False,action="store_true",dest="use_php",help="If make cscope for a PHP project")
+	parser.add_option("--cs",default=False,action="store_true",dest="use_cs",help="If make cscope for a C# project")
 
 
 

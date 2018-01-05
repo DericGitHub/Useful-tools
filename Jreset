@@ -1,0 +1,2 @@
+#!/bin/bash
+hpnpf -x $1 /work/marlin/test/phx_commonlib/configuration/pjl/pml_SuperNVRAMInit.pjl
